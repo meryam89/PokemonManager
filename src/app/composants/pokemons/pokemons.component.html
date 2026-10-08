@@ -1,7 +1,243 @@
-<h2>Liste des Pokémon</h2>
 
-<ul>
-  <li>Pikachu</li>
-  <li>Bulbizarre</li>
-  <li>Salamèche</li>
-</ul>
+<section class="pokemon-page">
+
+  <h1>Mon Pokédex</h1>
+  <p>Explore les Pokémon et découvre leurs caractéristiques.</p>
+
+  <form
+    class="search-bar"
+    (ngSubmit)="searchPokemon()"
+  >
+    <input
+      type="search"
+      name="pokemonSearch"
+      [(ngModel)]="searchQuery"
+      placeholder="Rechercher un Pokémon (ex : pikachu)"
+      aria-label="Nom du Pokémon"
+    >
+
+    <button type="submit" [disabled]="loading">
+      🔍 Rechercher
+    </button>
+
+    @if (isSearching) {
+      <button
+        type="button"
+        class="reset-button"
+        (click)="resetSearch()"
+        [disabled]="loading"
+      >
+        Voir tous les Pokémon
+      </button>
+    }
+  </form>
+
+  <div class="type-filter">
+
+    <label for="pokemon-type">Filtrer par type :</label>
+
+    <select
+      id="pokemon-type"
+      name="pokemonType"
+      [(ngModel)]="selectedType"
+      (change)="filterByType()"
+      [disabled]="loading"
+    >
+      <option value="">Tous les types</option>
+
+      @for (type of types; track type.name) {
+        <option [value]="type.name">
+          {{ translateType(type.name) }}
+        </option>
+      }
+    </select>
+
+  </div>
+
+
+  @if (loading) {
+    <p>Chargement des Pokémon...</p>
+  }
+
+  @if (error) {
+    <p class="error">{{ error }}</p>
+  }
+
+  @if (!loading && !error) {
+
+
+    @if (mode === 'search') {
+      <p>Résultat de la recherche</p>
+    } @else if (mode === 'type') {
+      <p>{{ nbPokemon }} Pokémon de type {{ translateType(selectedType) }}</p>
+    } @else if (mode === 'generation') {
+      <p>
+        {{ nbPokemon }} espèces dans la
+        {{ translateGeneration(selectedGeneration) }}
+      </p>
+    } @else {
+      <p>{{ nbPokemon }} Pokémon disponibles</p>
+    }
+
+    <div class="pokemon-grid">
+
+      @for (pokemon of pokemons; track pokemon.id) {
+
+        <article
+          class="pokemon-card"
+          role="button"
+          tabindex="0"
+          (click)="openPokemonDetails(pokemon)"
+          (keydown.enter)="openPokemonDetails(pokemon)"
+          (keydown.space)="$event.preventDefault(); openPokemonDetails(pokemon)"
+        >
+
+          <img
+            [src]="getPokemonImage(pokemon)"
+            [alt]="pokemon.name"
+            width="150"
+          >
+
+          <span>#{{ pokemon.id }}</span>
+
+          <h2>{{ pokemon.name | titlecase }}</h2>
+
+          <div class="pokemon-types">
+            @for (item of pokemon.types; track item.slot) {
+              <span>{{ translateType(item.type.name) }}</span>
+            }
+          </div>
+
+          <p>Taille : {{ pokemon.height / 10 }} m</p>
+          <p>Poids : {{ pokemon.weight / 10 }} kg</p>
+
+        </article>
+
+      }
+
+    </div>
+
+    @if (mode !== 'search' && nbPokemon > pageSize)  {
+      <div class="pagination">
+
+        <button
+          (click)="previousPage()"
+          [disabled]="currentPage === 1 || loading"
+        >
+          ← Précédent
+        </button>
+
+        <span>Page {{ currentPage }}</span>
+
+        <button
+          (click)="nextPage()"
+          [disabled]="currentPage * pageSize >= nbPokemon || loading"
+        >
+          Suivant →
+        </button>
+
+      </div>
+    }
+
+  }
+
+  <!-- Fenêtre de détails Pokémon -->
+
+  @if (selectedPokemon; as pokemon) {
+
+    <div
+      class="pokemon-modal-overlay"
+      (click)="closePokemonDetails()"
+    >
+
+      <div
+        class="pokemon-modal"
+        role="dialog"
+        aria-modal="true"
+        [attr.aria-label]="'Détails de ' + pokemon.name"
+        (click)="$event.stopPropagation()"
+      >
+
+        <button
+          type="button"
+          class="modal-close"
+          aria-label="Fermer la fenêtre"
+          (click)="closePokemonDetails()"
+        >
+          ✕
+        </button>
+
+        <div class="modal-header">
+
+          <img
+            [src]="getPokemonImage(pokemon)"
+            [alt]="pokemon.name"
+          >
+
+          <span class="pokemon-number">
+          #{{ pokemon.id }}
+        </span>
+
+          <h2>{{ pokemon.name | titlecase }}</h2>
+
+
+          <div class="pokemon-types">
+            @for (item of pokemon.types; track item.slot) {
+              <span>{{ translateType(item.type.name) }}</span>
+            }
+          </div>
+
+
+        </div>
+
+        <div class="modal-info">
+
+          <div>
+            <strong>Taille</strong>
+            <p>{{ pokemon.height / 10 }} m</p>
+          </div>
+
+          <div>
+            <strong>Poids</strong>
+            <p>{{ pokemon.weight / 10 }} kg</p>
+          </div>
+
+        </div>
+
+        <h3>Statistiques</h3>
+
+        <div class="pokemon-stats">
+
+          @for (stat of pokemon.stats; track stat.stat.name) {
+
+            <div class="stat-row">
+
+            <span class="stat-name">
+              {{ translateStat(stat.stat.name) }}
+            </span>
+
+              <span class="stat-value">
+              {{ stat.base_stat }}
+            </span>
+
+              <div class="stat-bar">
+                <div
+                  class="stat-fill"
+                  [style.width.%]="stat.base_stat / 255 * 100"
+                ></div>
+              </div>
+
+            </div>
+
+          }
+
+        </div>
+
+      </div>
+
+    </div>
+
+  }
+
+</section>
+

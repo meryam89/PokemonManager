@@ -1,7 +1,27 @@
-<h2>Liste des générations Pokémon</h2>
 
-<ul>
-  <li>Génération 1 - Kanto</li>
-  <li>Génération 2 - Johto</li>
-  <li>Génération 3 - Hoenn</li>
-</ul>
+<section class="generations-section">
+
+  <h2>Les différentes générations</h2>
+
+  <div class="generations-list">
+
+    @for (gen of generations; track gen.name) {
+
+      <button
+        type="button"
+        class="generation-card"
+        [class.active]="selectedGeneration === gen.name"
+        (click)="selectGeneration(gen.name)"
+      >
+        <span>🎮</span>
+        <span class="generation-name">
+          {{ gen.name | titlecase }}
+        </span>
+      </button>
+
+    }
+
+  </div>
+
+</section>
+

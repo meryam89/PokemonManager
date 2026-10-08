@@ -1,7 +1,12 @@
-<h1>Pokemon Manager</h1>
 
-<app-generations></app-generations>
+
+
+<app-generations
+  (generationSelected)="onGenerationSelected($event)"
+></app-generations>
 
 <hr>
 
 <app-pokemons></app-pokemons>
+
+<router-outlet></router-outlet>

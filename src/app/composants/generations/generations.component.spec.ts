@@ -1,4 +1,9 @@
+
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideHttpClient } from '@angular/common/http';
+import {
+  provideHttpClientTesting
+} from '@angular/common/http/testing';
 
 import { GenerationsComponent } from './generations.component';
 
@@ -8,10 +13,13 @@ describe('GenerationsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [GenerationsComponent]
-    })
-    .compileComponents();
-    
+      imports: [GenerationsComponent],
+      providers: [
+        provideHttpClient(),
+        provideHttpClientTesting()
+      ]
+    }).compileComponents();
+
     fixture = TestBed.createComponent(GenerationsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

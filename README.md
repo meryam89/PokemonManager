@@ -1,27 +1,93 @@
-# PokemonManager
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.17.
+# Pokémon Manager
 
-## Development server
+Application web développée avec Angular permettant d'explorer les Pokémon grâce à l'API publique PokéAPI.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Présentation
 
-## Code scaffolding
+Pokémon Manager est un Pokédex interactif qui permet de consulter les Pokémon, de rechercher un Pokémon précis et de filtrer les résultats par type ou par génération.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+L'application propose une interface responsive et une fenêtre de détails pour consulter les caractéristiques de chaque Pokémon.
 
-## Build
+## Fonctionnalités
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- Affichage des Pokémon sous forme de cartes
+- Pagination des résultats
+- Recherche d'un Pokémon par nom ou par numéro
+- Filtrage des Pokémon par type
+- Filtrage des Pokémon par génération
+- Affichage des détails d'un Pokémon dans une fenêtre modale
+- Consultation des statistiques de base
+- Traduction en français des types et des statistiques
+- Gestion des erreurs et des états de chargement
+- Interface responsive
 
-## Running unit tests
+## Technologies utilisées
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+- Angular
+- TypeScript
+- HTML
+- CSS
+- RxJS
+- PokéAPI
+- Karma et Jasmine pour les tests unitaires
 
-## Running end-to-end tests
+## Installation
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Cloner le dépôt :
 
-## Further help
+```bash
+git clone URL_DU_DEPOT
+```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Accéder au dossier :
+
+```bash
+cd PokemonManager
+```
+
+Installer les dépendances :
+
+```bash
+npm install
+```
+
+Démarrer le serveur de développement :
+
+```bash
+npm start
+```
+
+Ouvrir l'application dans le navigateur à l'adresse :
+
+http://localhost:4200
+
+## Tests
+
+Pour lancer les tests unitaires :
+
+```bash
+npm test -- --watch=false
+```
+
+## Build de production
+
+Pour générer une version de production :
+
+```bash
+npm run build
+```
+
+## API utilisée
+
+Les données des Pokémon proviennent de l'API publique PokéAPI :
+
+https://pokeapi.co/
+
+## Contexte du projet
+
+Projet personnel réalisé dans le cadre de la préparation au titre professionnel Concepteur Développeur d'Applications (CDA).
+
+## Auteur
+
+Projet développé dans le cadre d'un portfolio de développement web.
