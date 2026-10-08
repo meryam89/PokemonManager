@@ -37,7 +37,7 @@ L'application propose une interface responsive et une fenêtre de détails pour 
 Cloner le dépôt :
 
 ```bash
-git clone URL_DU_DEPOT
+git clone https://github.com/meryam89/PokemonManager.git
 ```
 
 Accéder au dossier :
